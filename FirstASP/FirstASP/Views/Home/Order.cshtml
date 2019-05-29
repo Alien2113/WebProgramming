@@ -1,0 +1,75 @@
+﻿
+@{
+
+}
+@model FirstASP.Models.Orders
+
+<div>
+    @using (Ajax.BeginForm("Order", new AjaxOptions { OnSuccess = "OnSuccessForm", UpdateTargetId = "results" }))
+    {
+        <h1>Введите ваши Данные</h1>
+        @Html.ValidationMessage("InvalidValues", new { @class = "text-danger" })
+        @Html.Hidden("num", (object)Convert.ToInt32(ViewBag.num))
+
+        <div class="row">
+            <div clas="col-md-offset-4 col-md-4 ">
+                @Html.EditorFor(model => model.FIO, new { htmlAttributes = new { placeholder = "ФИО" } })
+                @Html.ValidationMessageFor(model => model.FIO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div clas="col-md-offset-4 col-md-4 ">
+                @Html.EditorFor(model => model.number, new { htmlAttributes = new { placeholder = "Номер телефона" } })
+                @Html.ValidationMessageFor(model => model.number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div clas="col-md-offset-4 col-md-4 ">
+                @Html.EditorFor(model => model.adress, new { htmlAttributes = new { placeholder = "Адресс" } })
+                @Html.ValidationMessageFor(model => model.adress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div clas="col-md-offset-4 col-md-4 ">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { placeholder = "Почта" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        /*<p>
+            <label>ФИО:</label><br />
+            <input type="text" name="name" />
+        </p>
+        <p>
+            <label>Номер телефона:</label><br />
+            <input type="text" name="number1" />
+        </p>
+
+        <p>
+            <label>Адресс:</label><br />
+            <input type="text" name="street" />
+        </p>
+
+        <p>
+            <label>email:</label><br />
+            <input type="text" name="mail" />
+        </p>
+        */
+        <p>
+
+            <input type="submit" value="Отправить" />
+        </p>
+
+    }
+
+    <div id="results"></div>
+</div>
+                @Styles.Render("~/Content/css")
+                @Scripts.Render("~/bundles/bootstrap")
+                <script type="text/javascript">
+                    function OnSuccessForm() {
+                        alert('Ваш заказ принят');
+                    }
+                </script>

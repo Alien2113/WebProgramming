@@ -1,0 +1,70 @@
+﻿
+@{
+
+}
+
+
+
+@{
+    int j = 0;
+    foreach (FirstASP.Models.Info i in ViewBag.data)
+    {
+
+        <div class="col-md-offset-1 col-md-4  col-xs-8  col-sm-4">
+            <img src="@i.src" alt="Картинка"
+                 width="500">
+
+        </div>
+
+        <div class="col-md-offset-3 col-md-3  col-xs-8 col-sm-offset-3 col-sm-5">
+            <p><strong>Страна производитель :</strong> @i.country</p>
+            <p><strong>Год выпуска :</strong> @i.year</p>
+            <p><strong>Кол-во на складе :</strong> @i.count</p>
+            <p><strong>Техническая хар-ка :</strong> @i.info</p>
+            <ul class="nav nav-pills">
+                <li><a href="/Home/Order?n=@i.id">Оформить заказ</a></li>
+            </ul>
+        </div>
+        if (ViewBag.Maket != null)
+        {
+            if (ViewBag.Maket.admin == true)
+            {
+                @Html.ActionLink("Изменить", "Change", "Home", new { @id = i.constract }, new { @class = "ChangeDialog", data_dialog_title = "Изменение информации" })
+            }
+        }
+
+
+
+
+        j++;
+    }
+    if (ViewBag.Maket != null)
+    {
+        if (ViewBag.Maket.admin == true && j == 0)
+        {
+            @Html.ActionLink("Добавить", "Add", "Home", new { id = ViewBag.n }, new { @class = "ChangeDialog", data_dialog_title = "Добавление информации" })
+        }
+    }
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(document).ready(function () {
+
+        $.ajaxSetup({ cache: false });
+
+        $(".ChangeDialog").on("click", function (e) {
+            e.preventDefault();
+
+            $("<div></div>")
+                .addClass("dialog")
+                .appendTo("body")
+                .dialog({
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() },
+                    modal: true
+                })
+                .load(this.href);
+        });
+    });
+</script>
